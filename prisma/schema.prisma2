@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type ApplicationsContact {
+  email        String
+  phoneNo      String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  phoneNoThree Json?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  phoneNoTwo   Json?
+  postBoxNo    String?
+}
+
+type ApplicationsEducationQualifications {
+  certificationType String?
+  endDate           String
+  id                Int
+  institute         String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  remarks           Json?
+  startDate         String
+}
+
+type ApplicationsExperiences {
+  endDate      String
+  id           Int
+  organization String
+  position     String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  remarks      Json?
+  startDate    String
+}
+
+type ApplicationsFieldOfStudy {
+  createdAt String
+  createdBy String
+  deleted   Boolean
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  deletedAt Json?
+  id        Int
+  title     String
+  updatedAt String
+  updatedBy String
+  version   Int
+}
+
+type ApplicationsVacancy {
+  branch          String?
+  createdAt       String
+  createdBy       String
+  deleted         Boolean
+  deletedAt       String?
+  department      String
+  endDate         String
+  fresh           Boolean
+  id              String
+  jobPosition     String
+  jobRequirements String
+  majorDuties     String
+  noOfVacant      Int
+  placeOfWork     String?
+  startDate       String
+  updatedAt       String
+  updatedBy       String
+  vacancyNo       String
+  vacancyType     String
+  version         Int
+}
+
+model applications {
+  id                      String                                @id @default(auto()) @map("_id") @db.ObjectId
+  age                     Int
+  cgpa                    Float
+  contact                 ApplicationsContact
+  createdAt               String
+  createdBy               String
+  deleted                 Boolean
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  deletedAt               Json?
+  dob                     String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  documentName            Json?
+  educationQualifications ApplicationsEducationQualifications[]
+  experiences             ApplicationsExperiences[]
+  fieldOfStudy            ApplicationsFieldOfStudy
+  firstName               String
+  fresh                   Boolean
+  fullName                String
+  id_                     String                                @map("id")
+  instituteOfStudy        String
+  lastName                String
+  middleName              String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  notifications           Json?
+  phaseLevel              String
+  result                  Float
+  sex                     String
+  updatedAt               String
+  updatedBy               String
+  vacancy                 ApplicationsVacancy
+  version                 Int
+}
+
+model posts {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  v               Int      @map("__v")
+  comments        String[]
+  createdAt       DateTime @db.Date
+  description     String
+  firstName       String
+  lastName        String
+  /// Nested objects had no data in the sample dataset to introspect a nested type.
+  likes           Json
+  location        String
+  picturePath     String?
+  updatedAt       DateTime @db.Date
+  userId          String
+  userPicturePath String
+}
+
+model users {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int      @map("__v")
+  createdAt     DateTime @db.Date
+  email         String
+  firstName     String
+  friends       String[]
+  impressions   Int
+  lastName      String
+  location      String
+  occupation    String
+  password      String
+  picturePath   String
+  updatedAt     DateTime @db.Date
+  viewedProfile Int
+}
+
+model vacancy {
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  branch          String
+  department      String
+  endDate         String
+  fresh           Boolean
+  id_             String  @map("id")
+  jobPosition     String
+  jobRequirements String
+  majorDuties     String
+  noOfVacant      Int
+  placeOfWork     String
+  startDate       String
+  vacancyNo       String
+  vacancyType     String
+}

@@ -1,0 +1,153 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type ApplicationsContact {
+  email        String?
+  phoneNo      String?
+  phoneNoThree String?
+  phoneNoTwo   String?
+  postBoxNo    String?
+}
+
+type ApplicationsEducationQualifications {
+  id                Int
+  institute         String
+  certificationType String?
+  startDate         String
+  endDate           String
+  remarks           String?
+}
+
+type ApplicationsExperiences {
+  id           Int
+  position     String
+  organization String
+  startDate    String
+  endDate      String
+  remarks      String?
+}
+
+type ApplicationsFieldOfStudy {
+  id        Int
+  title     String?
+  createdAt String
+  createdBy String
+  deleted   Boolean
+  deletedAt String?
+  updatedAt String?
+  updatedBy String?
+  version   Int
+}
+
+model ApplicationsVacancy {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  id_             String         @map("id")
+  vacancyNo       String
+  jobPosition     String
+  jobRequirements String
+  majorDuties     String
+  placeOfWork     String?
+  startDate       DateTime       @db.Date
+  endDate         DateTime       @db.Date
+  fresh           Boolean
+  branch          String?
+  department      String?
+  vacancyType     String
+  noOfVacant      Int
+  createdAt       DateTime       @db.Date
+  createdBy       String
+  deleted         Boolean
+  deletedAt       DateTime       @db.Date
+  updatedAt       DateTime       @db.Date
+  updatedBy       String?
+  version         Int
+  applications    applications[]
+}
+
+model applications {
+  id                      String                                @id @default(auto()) @map("_id") @db.ObjectId
+  id_                     String                                @map("id")
+  age                     Int
+  cgpa                    Float
+  contact                 ApplicationsContact?
+  createdAt               DateTime                              @db.Date
+  createdBy               String
+  deleted                 Boolean
+  deletedAt               DateTime                              @db.Date
+  dob                     DateTime                              @db.Date
+  documentName            String?
+  educationQualifications ApplicationsEducationQualifications[]
+  experiences             ApplicationsExperiences[]
+  fieldOfStudy            ApplicationsFieldOfStudy?
+  firstName               String
+  lastName                String
+  middleName              String
+  fresh                   Boolean
+  fullName                String
+  instituteOfStudy        String?
+  notifications           Json?
+  phaseLevel              String?
+  result                  Float
+  sex                     String
+  updatedAt               DateTime                              @db.Date
+  updatedBy               String?
+  vacancy                 ApplicationsVacancy                   @relation(fields: [applicationsVacancyId], references: [id])
+  version                 Int
+  applicationsVacancyId   String                                @db.ObjectId
+}
+
+model vacancy {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  branch          String
+  department      String
+  endDate         DateTime @db.Date
+  fresh           Boolean
+  id_             String   @map("id")
+  jobPosition     String
+  jobRequirements String
+  majorDuties     String
+  noOfVacant      Int
+  placeOfWork     String
+  startDate       DateTime @db.Date
+  vacancyNo       String
+  vacancyType     String
+}
+
+model posts {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  v               Int      @map("__v")
+  comments        String[]
+  createdAt       DateTime @db.Date
+  description     String
+  firstName       String
+  lastName        String
+  likes           String[]
+  location        String
+  picturePath     String?
+  updatedAt       DateTime @db.Date
+  userId          String
+  userPicturePath String
+}
+
+model users {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int      @map("__v")
+  createdAt     DateTime @db.Date
+  email         String
+  firstName     String
+  friends       String[]
+  impressions   Int
+  lastName      String
+  location      String
+  occupation    String
+  password      String
+  picturePath   String
+  updatedAt     DateTime @db.Date
+  viewedProfile Int
+}

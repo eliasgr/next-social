@@ -1,0 +1,1 @@
+GET http://localhost:3000/api/application?page=2&&itemsPerPage=100
